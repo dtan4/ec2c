@@ -13,13 +13,13 @@ var GlobalFlags = []cli.Flag{}
 var Commands = []cli.Command{
 	{
 		Name:   "launch",
-		Usage:  "",
+		Usage:  "Launch new EC2 instance",
 		Action: command.CmdLaunch,
 		Flags:  []cli.Flag{},
 	},
 	{
 		Name:   "terminate",
-		Usage:  "",
+		Usage:  "Terminate the specified EC2 instance",
 		Action: command.CmdTerminate,
 		Flags:  []cli.Flag{},
 	},
