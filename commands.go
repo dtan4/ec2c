@@ -12,9 +12,9 @@ var GlobalFlags = []cli.Flag{}
 
 var Commands = []cli.Command{
 	{
-		Name:   "up",
+		Name:   "launch",
 		Usage:  "",
-		Action: command.CmdUp,
+		Action: command.CmdLaunch,
 		Flags:  []cli.Flag{},
 	},
 	{

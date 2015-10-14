@@ -2,7 +2,7 @@ package command
 
 import "github.com/codegangsta/cli"
 
-func CmdUp(c *cli.Context) {
+func CmdLaunch(c *cli.Context) {
 	// Write your code here
 
 }
