@@ -1,7 +1,11 @@
 package command
 
-import "testing"
+import (
+	"testing"
 
-func TestCmdTerminate(t *testing.T) {
-	// Write your code here
+	"github.com/mitchellh/cli"
+)
+
+func TestTerminateCommand_implement(t *testing.T) {
+	var _ cli.Command = &TerminateCommand{}
 }
