@@ -1,7 +1,13 @@
 package command
 
 import (
+	"fmt"
+	"os"
 	"strings"
+	"text/tabwriter"
+
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
 type ListCommand struct {
@@ -9,7 +15,38 @@ type ListCommand struct {
 }
 
 func (c *ListCommand) Run(args []string) int {
-	// Write your code here
+	svc := ec2.New(&aws.Config{})
+
+	resp, err := svc.DescribeInstances(nil)
+	if err != nil {
+		panic(err)
+	}
+
+	var privateIpAddress, publicIpAddress string
+
+	w := new(tabwriter.Writer)
+	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
+
+	fmt.Fprintln(w, strings.Join([]string{"INSTANCE ID", "STATUS", "PRIVATE IP", "PUBLIC IP"}, "\t"))
+	for idx, _ := range resp.Reservations {
+		for _, instance := range resp.Reservations[idx].Instances {
+			if instance.PrivateIpAddress != nil {
+				privateIpAddress = *instance.PrivateIpAddress
+			} else {
+				privateIpAddress = ""
+			}
+
+			if instance.PublicIpAddress != nil {
+				publicIpAddress = *instance.PublicIpAddress
+			} else {
+				publicIpAddress = ""
+			}
+
+			fmt.Fprintln(w, strings.Join([]string{*instance.InstanceId, *instance.State.Name, privateIpAddress, publicIpAddress}, "\t"))
+		}
+	}
+
+	w.Flush()
 
 	return 0
 }
