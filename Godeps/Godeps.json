@@ -1,0 +1,17 @@
+{
+	"ImportPath": "github.com/dtan4/ec2c",
+	"GoVersion": "go1.5.1",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/mitchellh/cli",
+			"Rev": "8102d0ed5ea2709ade1243798785888175f6e415"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/ssh/terminal",
+			"Rev": "0c93e1ff9f91f0c63bf17b123de503d023434fdd"
+		}
+	]
+}
