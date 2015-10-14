@@ -15,7 +15,7 @@ func (c *LaunchCommand) Run(args []string) int {
 }
 
 func (c *LaunchCommand) Synopsis() string {
-	return ""
+	return "Launch new EC2 instance"
 }
 
 func (c *LaunchCommand) Help() string {

@@ -15,7 +15,7 @@ func (c *TerminateCommand) Run(args []string) int {
 }
 
 func (c *TerminateCommand) Synopsis() string {
-	return ""
+	return "Terminate the specified EC2 instance"
 }
 
 func (c *TerminateCommand) Help() string {
