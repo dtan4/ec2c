@@ -22,12 +22,12 @@ func (c *ListCommand) Run(args []string) int {
 		panic(err)
 	}
 
-	var privateIPAddress, publicIPAddress string
+	var privateIPAddress, publicIPAddress, instanceName string
 
 	w := new(tabwriter.Writer)
 	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
 
-	fmt.Fprintln(w, strings.Join([]string{"INSTANCE ID", "STATUS", "PRIVATE IP", "PUBLIC IP"}, "\t"))
+	fmt.Fprintln(w, strings.Join([]string{"INSTANCE ID", "STATUS", "PRIVATE IP", "PUBLIC IP", "NAME"}, "\t"))
 	for idx, _ := range resp.Reservations {
 		for _, instance := range resp.Reservations[idx].Instances {
 			if instance.PrivateIPAddress != nil {
@@ -42,7 +42,18 @@ func (c *ListCommand) Run(args []string) int {
 				publicIPAddress = ""
 			}
 
-			fmt.Fprintln(w, strings.Join([]string{*instance.InstanceID, *instance.State.Name, privateIPAddress, publicIPAddress}, "\t"))
+			instanceName = ""
+
+			for _, tag := range instance.Tags {
+				if *tag.Key == "Name" {
+					instanceName = *tag.Value
+					break
+				}
+			}
+
+			fmt.Fprintln(w, strings.Join(
+				[]string{*instance.InstanceID, *instance.State.Name, privateIPAddress, publicIPAddress, instanceName}, "\t",
+			))
 		}
 	}
 
