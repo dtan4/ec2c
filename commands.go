@@ -17,6 +17,11 @@ func Commands(meta *command.Meta) map[string]cli.CommandFactory {
 				Meta: *meta,
 			}, nil
 		},
+		"list-requests": func() (cli.Command, error) {
+			return &command.ListRequestsCommand{
+				Meta: *meta,
+			}, nil
+		},
 		"spot-request": func() (cli.Command, error) {
 			return &command.SpotRequestCommand{
 				Meta: *meta,
