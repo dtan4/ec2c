@@ -1,3 +1,5 @@
 language: go
 go:
   - '1.5'
+script:
+  - GO15VENDOREXPERIMENT=1 go build
