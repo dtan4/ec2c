@@ -1,5 +1,7 @@
 language: go
 go:
   - '1.5'
+env:
+  - GO15VENDOREXPERIMENT=1
 script:
-  - GO15VENDOREXPERIMENT=1 go build
+  - go build
