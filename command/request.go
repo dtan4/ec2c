@@ -9,11 +9,11 @@ import (
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
-type SpotRequestCommand struct {
+type RequestCommand struct {
 	Meta
 }
 
-func (c *SpotRequestCommand) Run(args []string) int {
+func (c *RequestCommand) Run(args []string) int {
 	var (
 		amiId                    string
 		associatePublicIpAddress bool
@@ -118,11 +118,11 @@ func (c *SpotRequestCommand) Run(args []string) int {
 	return 0
 }
 
-func (c *SpotRequestCommand) Synopsis() string {
+func (c *RequestCommand) Synopsis() string {
 	return "Request new Spot Instances"
 }
 
-func (c *SpotRequestCommand) Help() string {
+func (c *RequestCommand) Help() string {
 	helpText := `
 
 `
