@@ -1,9 +1,6 @@
 {
 	"ImportPath": "github.com/dtan4/ec2c",
 	"GoVersion": "go1.5.1",
-	"Packages": [
-		"./..."
-	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/aws",
@@ -21,7 +18,7 @@
 			"Rev": "df31ba5c1c80d1ceffb79b5e0dcc0baf60c3bf1b"
 		},
 		{
-			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/query",
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/query/queryutil",
 			"Comment": "v0.9.7",
 			"Rev": "df31ba5c1c80d1ceffb79b5e0dcc0baf60c3bf1b"
 		},
@@ -42,11 +39,6 @@
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/service/ec2",
-			"Comment": "v0.9.7",
-			"Rev": "df31ba5c1c80d1ceffb79b5e0dcc0baf60c3bf1b"
-		},
-		{
-			"ImportPath": "github.com/aws/aws-sdk-go/service/sts",
 			"Comment": "v0.9.7",
 			"Rev": "df31ba5c1c80d1ceffb79b5e0dcc0baf60c3bf1b"
 		},
