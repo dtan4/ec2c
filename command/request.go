@@ -1,8 +1,10 @@
 package command
 
 import (
+	"encoding/base64"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -26,6 +28,7 @@ func (c *RequestCommand) Run(args []string) int {
 		securityGroups           []*string
 		spotPrice                string
 		subnetId                 string
+		userData                 string
 		volumeSize               int64
 		volumeType               string
 	)
@@ -49,6 +52,7 @@ func (c *RequestCommand) Run(args []string) int {
 	flags.StringVar(&securityGroupIds, "sg", "", "Security group Ids")
 	flags.StringVar(&spotPrice, "spotPrice", "", "Maximum bidding price")
 	flags.StringVar(&subnetId, "subnet", "", "Subnet Id")
+	flags.StringVar(&userData, "userData", "", "User data")
 	flags.Int64Var(&volumeSize, "volumeSize", 8, "Volume size (default: 8)")
 	flags.StringVar(&volumeType, "volumeType", "gp2", "Volume type (default: gp2)")
 
@@ -99,6 +103,15 @@ func (c *RequestCommand) Run(args []string) int {
 				Groups:                   securityGroups,
 			},
 		}
+	}
+
+	if userData != "" {
+		buf, err := ioutil.ReadFile(userData)
+		if err != nil {
+			panic(err)
+		}
+
+		launchSpecification.UserData = aws.String(base64.StdEncoding.EncodeToString(buf))
 	}
 
 	opts := &ec2.RequestSpotInstancesInput{
