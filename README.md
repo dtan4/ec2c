@@ -1,10 +1,34 @@
 # ec2c
 
-
+Simple AWS EC2 CLI
 
 ## Description
 
 ## Usage
+
+### `ec2c cancel`
+
+Cancel the specified EC2 Spot Instance requests
+
+### `ec2c launch`
+
+Launch new EC2 instance
+
+### `ec2c list`
+
+List EC2 instances
+
+### `ec2c list_requests`
+
+List Spot Instance requests
+
+### `ec2c request`
+
+Request new Spot Instances
+
+### `ec2c terminate`
+
+Terminate the specified EC2 instance
 
 ## Install
 
