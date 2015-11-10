@@ -27,7 +27,7 @@ func (c *ListRequestsCommand) Run(args []string) int {
 	w := new(tabwriter.Writer)
 	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
 
-	fmt.Fprintln(w, strings.Join([]string{"REQUEST ID", "STATUS", "MAX PRICE", "INSTANCE TYPE", "INSTANCE ID", "NAME"}, "\t"))
+	fmt.Fprintln(w, strings.Join([]string{"REQUEST ID", "MAX PRICE", "INSTANCE TYPE", "INSTANCE ID", "STATE", "STATUS", "NAME"}, "\t"))
 	for _, request := range resp.SpotInstanceRequests {
 		requestName = ""
 
@@ -45,7 +45,15 @@ func (c *ListRequestsCommand) Run(args []string) int {
 		}
 
 		fmt.Fprintln(w, strings.Join(
-			[]string{*request.SpotInstanceRequestId, *request.State, *request.SpotPrice, *request.LaunchSpecification.InstanceType, instanceId, requestName}, "\t",
+			[]string{
+				*request.SpotInstanceRequestId,
+				*request.SpotPrice,
+				*request.LaunchSpecification.InstanceType,
+				instanceId,
+				*request.State,
+				*request.Status.Code,
+				requestName,
+			}, "\t",
 		))
 	}
 
