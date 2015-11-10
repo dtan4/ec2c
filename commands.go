@@ -32,6 +32,11 @@ func Commands(meta *command.Meta) map[string]cli.CommandFactory {
 				Meta: *meta,
 			}, nil
 		},
+		"tag": func() (cli.Command, error) {
+			return &command.TagCommand{
+				Meta: *meta,
+			}, nil
+		},
 		"terminate": func() (cli.Command, error) {
 			return &command.TerminateCommand{
 				Meta: *meta,
