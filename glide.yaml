@@ -1,0 +1,21 @@
+package: github.com/dtan4/ec2c
+import:
+- package: github.com/aws/aws-sdk-go
+  version: df31ba5c1c80d1ceffb79b5e0dcc0baf60c3bf1b
+  subpackages:
+  - aws
+  - internal/endpoints
+  - internal/protocol/ec2query
+  - internal/protocol/query/queryutil
+  - internal/protocol/rest
+  - internal/protocol/xml/xmlutil
+  - internal/signer/v4
+  - service/ec2
+- package: github.com/mitchellh/cli
+  version: 8102d0ed5ea2709ade1243798785888175f6e415
+- package: github.com/vaughan0/go-ini
+  version: a98ad7ee00ec53921f08832bc06ecf7fd600e6a1
+- package: golang.org/x/crypto
+  version: 0c93e1ff9f91f0c63bf17b123de503d023434fdd
+  subpackages:
+  - ssh/terminal
