@@ -92,8 +92,6 @@ func (c *LaunchCommand) Run(args []string) int {
 		MaxCount:            aws.Int64(instanceCount),
 		MinCount:            aws.Int64(1),
 		Monitoring:          monitoring,
-		SecurityGroups:      securityGroups,
-		SubnetId:            aws.String(subnetId),
 	}
 
 	if subnetId != "" && associatePublicIpAddress {
