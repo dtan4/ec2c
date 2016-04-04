@@ -1,4 +1,4 @@
-.PHONY: deps glide
+.PHONY: deps
 
 deps:
 	go get github.com/Masterminds/glide
