@@ -1,0 +1,7 @@
+package: github.com/dtan4/ec2c
+import:
+- package: github.com/aws/aws-sdk-go
+  subpackages:
+  - aws
+  - service/ec2
+- package: github.com/mitchellh/cli
