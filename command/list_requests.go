@@ -7,6 +7,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
@@ -15,7 +16,7 @@ type ListRequestsCommand struct {
 }
 
 func (c *ListRequestsCommand) Run(args []string) int {
-	svc := ec2.New(&aws.Config{})
+	svc := ec2.New(session.New(), &aws.Config{})
 
 	resp, err := svc.DescribeSpotInstanceRequests(nil)
 	if err != nil {

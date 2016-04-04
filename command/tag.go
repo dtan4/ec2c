@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
@@ -26,7 +27,7 @@ func (c *TagCommand) Run(args []string) int {
 		arguments []string
 	)
 
-	svc := ec2.New(&aws.Config{})
+	svc := ec2.New(session.New(), &aws.Config{})
 
 	flags := flag.NewFlagSet("dtan4", flag.ContinueOnError)
 	flags.Usage = func() {}
