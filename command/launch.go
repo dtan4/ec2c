@@ -119,7 +119,9 @@ func (c *LaunchCommand) Run(args []string) int {
 		panic(err)
 	}
 
-	fmt.Println(resp)
+	for _, instance := range resp.Instances {
+		fmt.Println(*instance.InstanceId)
+	}
 
 	return 0
 }
