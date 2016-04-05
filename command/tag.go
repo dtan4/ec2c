@@ -71,8 +71,6 @@ func (c *TagCommand) Run(args []string) int {
 		panic(err)
 	}
 
-	fmt.Println(resp)
-
 	return 0
 }
 
