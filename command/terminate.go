@@ -56,7 +56,9 @@ func (c *TerminateCommand) Run(args []string) int {
 		panic(err)
 	}
 
-	fmt.Println(resp)
+	for _, instance := range resp.TerminatingInstances {
+		fmt.Println(*instance.InstanceId)
+	}
 
 	return 0
 }
