@@ -2,7 +2,6 @@ package command
 
 import (
 	"flag"
-	"fmt"
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -66,7 +65,7 @@ func (c *TagCommand) Run(args []string) int {
 		Tags:      tags,
 	}
 
-	resp, err := svc.CreateTags(opts)
+	_, err := svc.CreateTags(opts)
 	if err != nil {
 		panic(err)
 	}
