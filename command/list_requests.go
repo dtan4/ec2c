@@ -23,7 +23,7 @@ func (c *ListRequestsCommand) Run(args []string) int {
 		panic(err)
 	}
 
-	var instanceId, requestName string
+	var instanceID, requestName string
 
 	w := new(tabwriter.Writer)
 	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
@@ -33,9 +33,9 @@ func (c *ListRequestsCommand) Run(args []string) int {
 		requestName = ""
 
 		if request.InstanceId != nil {
-			instanceId = *request.InstanceId
+			instanceID = *request.InstanceId
 		} else {
-			instanceId = ""
+			instanceID = ""
 		}
 
 		for _, tag := range request.Tags {
@@ -50,7 +50,7 @@ func (c *ListRequestsCommand) Run(args []string) int {
 				*request.SpotInstanceRequestId,
 				*request.SpotPrice,
 				*request.LaunchSpecification.InstanceType,
-				instanceId,
+				instanceID,
 				*request.State,
 				*request.Status.Code,
 				requestName,

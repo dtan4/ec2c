@@ -16,8 +16,8 @@ type TagCommand struct {
 func (c *TagCommand) Run(args []string) int {
 	var (
 		dryRun           bool
-		instanceIdString string
-		instanceIds      []*string
+		instanceIDString string
+		instanceIDs      []*string
 		tagString        string
 		tags             []*ec2.Tag
 	)
@@ -32,7 +32,7 @@ func (c *TagCommand) Run(args []string) int {
 	flags.Usage = func() {}
 
 	flags.BoolVar(&dryRun, "dry-run", false, "Dry run (default: false)")
-	flags.StringVar(&instanceIdString, "instance", "", "Instance Ids")
+	flags.StringVar(&instanceIDString, "instance", "", "Instance Ids")
 	flags.StringVar(&tagString, "tags", "", "KEY=VALUE tags")
 
 	if err := flags.Parse(args[0:]); err != nil {
@@ -44,8 +44,8 @@ func (c *TagCommand) Run(args []string) int {
 		flags.Parse(flags.Args()[1:])
 	}
 
-	for _, id := range strings.Split(instanceIdString, ",") {
-		instanceIds = append(instanceIds, aws.String(id))
+	for _, id := range strings.Split(instanceIDString, ",") {
+		instanceIDs = append(instanceIDs, aws.String(id))
 	}
 
 	for _, tag := range strings.Split(tagString, ",") {
@@ -61,7 +61,7 @@ func (c *TagCommand) Run(args []string) int {
 
 	opts := &ec2.CreateTagsInput{
 		DryRun:    aws.Bool(dryRun),
-		Resources: instanceIds,
+		Resources: instanceIDs,
 		Tags:      tags,
 	}
 

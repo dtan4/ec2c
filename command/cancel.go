@@ -17,8 +17,8 @@ type CancelCommand struct {
 func (c *CancelCommand) Run(args []string) int {
 	var (
 		dryRun          bool
-		requestIdstring string
-		requestIds      []*string
+		requestIDString string
+		requestIDs      []*string
 	)
 
 	var (
@@ -31,7 +31,7 @@ func (c *CancelCommand) Run(args []string) int {
 	flags.Usage = func() {}
 
 	flags.BoolVar(&dryRun, "dry-run", false, "Dry run (default: false)")
-	flags.StringVar(&requestIdstring, "request", "", "Spot Instance request IDs")
+	flags.StringVar(&requestIDString, "request", "", "Spot Instance request IDs")
 
 	if err := flags.Parse(args[0:]); err != nil {
 		return 1
@@ -42,13 +42,13 @@ func (c *CancelCommand) Run(args []string) int {
 		flags.Parse(flags.Args()[1:])
 	}
 
-	for _, id := range strings.Split(requestIdstring, ",") {
-		requestIds = append(requestIds, aws.String(id))
+	for _, id := range strings.Split(requestIDString, ",") {
+		requestIDs = append(requestIDs, aws.String(id))
 	}
 
 	opts := &ec2.CancelSpotInstanceRequestsInput{
 		DryRun:                 aws.Bool(dryRun),
-		SpotInstanceRequestIds: requestIds,
+		SpotInstanceRequestIds: requestIDs,
 	}
 
 	resp, err := svc.CancelSpotInstanceRequests(opts)

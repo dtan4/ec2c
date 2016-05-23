@@ -17,8 +17,8 @@ type TerminateCommand struct {
 func (c *TerminateCommand) Run(args []string) int {
 	var (
 		dryRun           bool
-		instanceIdstring string
-		instanceIds      []*string
+		instanceIDString string
+		instanceIDs      []*string
 	)
 
 	var (
@@ -31,7 +31,7 @@ func (c *TerminateCommand) Run(args []string) int {
 	flags.Usage = func() {}
 
 	flags.BoolVar(&dryRun, "dry-run", false, "Dry run (default: false)")
-	flags.StringVar(&instanceIdstring, "instance", "", "Instance IDs")
+	flags.StringVar(&instanceIDString, "instance", "", "Instance IDs")
 
 	if err := flags.Parse(args[0:]); err != nil {
 		return 1
@@ -42,13 +42,13 @@ func (c *TerminateCommand) Run(args []string) int {
 		flags.Parse(flags.Args()[1:])
 	}
 
-	for _, id := range strings.Split(instanceIdstring, ",") {
-		instanceIds = append(instanceIds, aws.String(id))
+	for _, id := range strings.Split(instanceIDString, ",") {
+		instanceIDs = append(instanceIDs, aws.String(id))
 	}
 
 	opts := &ec2.TerminateInstancesInput{
 		DryRun:      aws.Bool(dryRun),
-		InstanceIds: instanceIds,
+		InstanceIds: instanceIDs,
 	}
 
 	resp, err := svc.TerminateInstances(opts)

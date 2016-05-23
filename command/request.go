@@ -18,17 +18,17 @@ type RequestCommand struct {
 
 func (c *RequestCommand) Run(args []string) int {
 	var (
-		amiId                    string
-		associatePublicIpAddress bool
+		amiID                    string
+		associatePublicIPAddress bool
 		availabilityZone         string
 		dryRun                   bool
 		instanceCount            int64
 		instanceType             string
 		keyName                  string
-		securityGroupIds         string
+		securityGroupIDs         string
 		securityGroups           []*string
 		spotPrice                string
-		subnetId                 string
+		subnetID                 string
 		userData                 string
 		volumeSize               int64
 		volumeType               string
@@ -43,16 +43,16 @@ func (c *RequestCommand) Run(args []string) int {
 	flags := flag.NewFlagSet("dtan4", flag.ContinueOnError)
 	flags.Usage = func() {}
 
-	flags.StringVar(&amiId, "ami", "", "AMI Id")
-	flags.BoolVar(&associatePublicIpAddress, "publicip", false, "Associate Public Ip (default: false)")
+	flags.StringVar(&amiID, "ami", "", "AMI Id")
+	flags.BoolVar(&associatePublicIPAddress, "publicip", false, "Associate Public Ip (default: false)")
 	flags.StringVar(&availabilityZone, "az", "", "Availability zone")
 	flags.BoolVar(&dryRun, "dry-run", false, "Dry run (default: false)")
 	flags.Int64Var(&instanceCount, "count", 1, "Number of instances (default: 1)")
 	flags.StringVar(&instanceType, "type", "", "Instance type")
 	flags.StringVar(&keyName, "key", "", "SSH key name")
-	flags.StringVar(&securityGroupIds, "sg", "", "Security group Ids")
+	flags.StringVar(&securityGroupIDs, "sg", "", "Security group Ids")
 	flags.StringVar(&spotPrice, "spotPrice", "", "Maximum bidding price")
-	flags.StringVar(&subnetId, "subnet", "", "Subnet Id")
+	flags.StringVar(&subnetID, "subnet", "", "Subnet Id")
 	flags.StringVar(&userData, "userData", "", "User data")
 	flags.Int64Var(&volumeSize, "volumeSize", 8, "Volume size (default: 8)")
 	flags.StringVar(&volumeType, "volumeType", "gp2", "Volume type (default: gp2)")
@@ -66,7 +66,7 @@ func (c *RequestCommand) Run(args []string) int {
 		flags.Parse(flags.Args()[1:])
 	}
 
-	for _, id := range strings.Split(securityGroupIds, ",") {
+	for _, id := range strings.Split(securityGroupIDs, ",") {
 		securityGroups = append(securityGroups, aws.String(id))
 	}
 
@@ -87,20 +87,20 @@ func (c *RequestCommand) Run(args []string) int {
 
 	launchSpecification := &ec2.RequestSpotLaunchSpecification{
 		BlockDeviceMappings: blockDeviceMappings,
-		ImageId:             aws.String(amiId),
+		ImageId:             aws.String(amiID),
 		KeyName:             aws.String(keyName),
 		InstanceType:        aws.String(instanceType),
 		Monitoring:          monitoring,
 		SecurityGroups:      securityGroups,
-		SubnetId:            aws.String(subnetId),
+		SubnetId:            aws.String(subnetID),
 	}
 
-	if subnetId != "" && associatePublicIpAddress {
+	if subnetID != "" && associatePublicIPAddress {
 		launchSpecification.NetworkInterfaces = []*ec2.InstanceNetworkInterfaceSpecification{
 			&ec2.InstanceNetworkInterfaceSpecification{
-				AssociatePublicIpAddress: aws.Bool(associatePublicIpAddress),
+				AssociatePublicIpAddress: aws.Bool(associatePublicIPAddress),
 				DeviceIndex:              aws.Int64(int64(0)),
-				SubnetId:                 aws.String(subnetId),
+				SubnetId:                 aws.String(subnetID),
 				Groups:                   securityGroups,
 			},
 		}
