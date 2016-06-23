@@ -26,6 +26,10 @@ List Spot Instance requests
 
 Request new Spot Instances
 
+### `ec2c tag`
+
+Tagging to EC2 instance
+
 ### `ec2c terminate`
 
 Terminate the specified EC2 instance
