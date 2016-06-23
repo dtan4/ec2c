@@ -51,7 +51,7 @@ func (c *TagCommand) Run(args []string) int {
 	for _, tag := range strings.Split(tagString, ",") {
 		keyValue := strings.Split(tag, "=")
 
-		if len(keyValue) >= 2 {
+		if len(keyValue) >= 1 {
 			tags = append(tags, &ec2.Tag{
 				Key:   aws.String(keyValue[0]),
 				Value: aws.String(strings.Join(keyValue[1:], "=")),
