@@ -33,7 +33,7 @@ func (c *UntagCommand) Run(args []string) int {
 
 	flags.BoolVar(&dryRun, "dry-run", false, "Dry run (default: false)")
 	flags.StringVar(&instanceIDString, "instance", "", "Instance Ids")
-	flags.StringVar(&tagString, "tags", "", "KEY=VALUE tags")
+	flags.StringVar(&tagString, "tags", "", "KEY tags")
 
 	if err := flags.Parse(args[0:]); err != nil {
 		return 1
@@ -53,13 +53,7 @@ func (c *UntagCommand) Run(args []string) int {
 
 		if len(keyValue) == 1 {
 			tags = append(tags, &ec2.Tag{
-				Key:   aws.String(keyValue[0]),
-				Value: aws.String(""),
-			})
-		} else {
-			tags = append(tags, &ec2.Tag{
-				Key:   aws.String(keyValue[0]),
-				Value: aws.String(strings.Join(keyValue[1:], "=")),
+				Key: aws.String(keyValue[0]),
 			})
 		}
 	}
