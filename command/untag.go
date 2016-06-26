@@ -49,13 +49,9 @@ func (c *UntagCommand) Run(args []string) int {
 	}
 
 	for _, tag := range strings.Split(tagString, ",") {
-		keyValue := strings.Split(tag, "=")
-
-		if len(keyValue) == 1 {
-			tags = append(tags, &ec2.Tag{
-				Key: aws.String(keyValue[0]),
-			})
-		}
+		tags = append(tags, &ec2.Tag{
+			Key: aws.String(tag),
+		})
 	}
 
 	opts := &ec2.DeleteTagsInput{
