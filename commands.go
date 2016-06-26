@@ -38,7 +38,7 @@ func Commands(meta *command.Meta) map[string]cli.CommandFactory {
 			}, nil
 		},
 		"untag": func() (cli.Command, error) {
-			return &command.UnTagCommand{
+			return &command.UntagCommand{
 				Meta: *meta,
 			}, nil
 		},

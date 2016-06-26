@@ -9,11 +9,11 @@ import (
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
-type UnTagCommand struct {
+type UntagCommand struct {
 	Meta
 }
 
-func (c *UnTagCommand) Run(args []string) int {
+func (c *UntagCommand) Run(args []string) int {
 	var (
 		dryRun           bool
 		instanceIDString string
@@ -78,11 +78,11 @@ func (c *UnTagCommand) Run(args []string) int {
 	return 0
 }
 
-func (c *UnTagCommand) Synopsis() string {
+func (c *UntagCommand) Synopsis() string {
 	return "Tag EC2 instances"
 }
 
-func (c *UnTagCommand) Help() string {
+func (c *UntagCommand) Help() string {
 	helpText := `
 
 `
