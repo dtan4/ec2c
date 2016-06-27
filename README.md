@@ -30,6 +30,10 @@ Request new Spot Instances
 
 Tagging to EC2 instance
 
+### `ec2c untag`
+
+Delete tag from the specified EC2 instance
+
 ### `ec2c terminate`
 
 Terminate the specified EC2 instance
