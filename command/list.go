@@ -28,7 +28,7 @@ func (c *ListCommand) Run(args []string) int {
 	w := new(tabwriter.Writer)
 	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
 
-	fmt.Fprintln(w, strings.Join([]string{"INSTANCE ID", "STATUS", "INSTANCE TYPE", "PRIVATE IP", "PUBLIC IP", "TAG"}, "\t"))
+	fmt.Fprintln(w, strings.Join([]string{"INSTANCE ID", "STATUS", "INSTANCE TYPE", "PRIVATE IP", "PUBLIC IP", "NAME", "TAG"}, "\t"))
 	for idx, _ := range resp.Reservations {
 		for _, instance := range resp.Reservations[idx].Instances {
 			if instance.PrivateIpAddress != nil {
@@ -44,16 +44,21 @@ func (c *ListCommand) Run(args []string) int {
 			}
 
 			instanceName = ""
+			tagKeyValue := []string{}
 
 			for _, tag := range instance.Tags {
-				instanceName = instanceName + *tag.Key
-				if len(*tag.Value) > 0 {
-					instanceName = instanceName + "=" + *tag.Value + ","
+				keyValue := *tag.Key
+				if *tag.Key == "Name" {
+					instanceName = *tag.Value
 				}
+				if len(*tag.Value) > 0 {
+					keyValue += "=" + *tag.Value
+				}
+				tagKeyValue = append(tagKeyValue, keyValue)
 			}
 
 			fmt.Fprintln(w, strings.Join(
-				[]string{*instance.InstanceId, *instance.State.Name, *instance.InstanceType, privateIPAddress, publicIPAddress, instanceName}, "\t",
+				[]string{*instance.InstanceId, *instance.State.Name, *instance.InstanceType, privateIPAddress, publicIPAddress, instanceName, strings.Join(tagKeyValue, ",")}, "\t",
 			))
 		}
 	}
