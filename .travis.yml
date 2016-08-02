@@ -7,8 +7,6 @@ go:
   - '1.6'
 env:
   - GO15VENDOREXPERIMENT=1
-install:
-  - make deps
 script:
   - make test
 deploy:
