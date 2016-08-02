@@ -39,6 +39,11 @@ bin/$(BINARY): deps $(SOURCES)
 bin/$(BINARY)$(LINUX_AMD64_SUFFIX): deps $(SOURCES)
 	GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o bin/$(BINARY)$(LINUX_AMD64_SUFFIX)
 
+.PHONY: ci-docker-release
+ci-docker-release: docker-build
+	@docker login -e="$(DOCKER_QUAY_EMAIL)" -u="$(DOCKER_QUAY_USERNAME)" -p="$(DOCKER_QUAY_PASSWORD)" $(DOCKER_REPOSITORY)
+	docker push $(DOCKER_IMAGE)
+
 .PHONY: clean
 clean:
 	rm -rf bin/*
@@ -59,3 +64,7 @@ docker-push:
 .PHONY: install
 install: deps
 	go install $(LDFLAGS)
+
+.PHONY: test
+test: deps
+	go test -v

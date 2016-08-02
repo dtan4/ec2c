@@ -1,7 +1,19 @@
+sudo: required
+services:
+  - docker
 language: go
 go:
   - '1.5'
   - '1.6'
-install: make deps
 env:
   - GO15VENDOREXPERIMENT=1
+install:
+  - make deps
+script:
+  - make test
+deploy:
+  provider: script
+  script: make ci-docker-release
+  on:
+    branch: master
+    go: '1.6'
