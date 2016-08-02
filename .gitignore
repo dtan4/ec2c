@@ -3,3 +3,5 @@ ec2c
 bin/*
 
 vendor/
+
+/glide
