@@ -7,8 +7,6 @@ SOURCES := $(shell find . -name '*.go' -type f)
 
 LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\" -X \"main.GoVersion=$(GOVERSION)\""
 
-GLIDE := $(shell command -v glide 2> /dev/null)
-
 DOCKER_REPOSITORY := quay.io
 DOCKER_IMAGE_NAME := $(DOCKER_REPOSITORY)/dtan4/ec2c
 DOCKER_IMAGE_TAG ?= latest
@@ -45,7 +43,7 @@ docker-push:
 
 .PHONY: glide
 glide:
-ifndef GLIDE
+ifeq ($(shell command -v glide 2> /dev/null),)
 	curl https://glide.sh/get | sh
 endif
 
