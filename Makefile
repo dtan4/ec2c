@@ -33,9 +33,11 @@ deps: glide
 
 .PHONY: docker-build
 docker-build:
-ifneq ($(findstring 'ELF 64-bit LSB executable', $(shell file bin/$(NAME) 2> /dev/null)),)
-	docker build -t $(DOCKER_IMAGE) .
+ifeq ($(findstring 'ELF 64-bit LSB executable', $(shell file bin/$(NAME) 2> /dev/null)),)
+	@echo "bin/$(NAME) is not a binary of Linux 64bit binary."
+	@exit 1
 endif
+	docker build -t $(DOCKER_IMAGE) .
 
 .PHONY: docker-push
 docker-push:
