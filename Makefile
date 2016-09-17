@@ -9,7 +9,7 @@ SOURCES := $(shell find . -name '*.go' -type f)
 
 LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\" -X \"main.GoVersion=$(GOVERSION)\""
 
-GLIDE_VERSION := 0.11.1
+GLIDE := $(shell command -v glide 2> /dev/null)
 
 DOCKER_REPOSITORY := quay.io
 DOCKER_IMAGE_NAME := $(DOCKER_REPOSITORY)/dtan4/ec2c
@@ -17,21 +17,6 @@ DOCKER_IMAGE_TAG := latest
 DOCKER_IMAGE := $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
 
 .DEFAULT_GOAL := bin/$(NAME)
-
-glide:
-ifeq ($(shell uname),Darwin)
-	curl -fL https://github.com/Masterminds/glide/releases/download/v$(GLIDE_VERSION)/glide-v$(GLIDE_VERSION)-darwin-amd64.zip -o glide.zip
-	unzip glide.zip
-	mv ./darwin-amd64/glide glide
-	rm -fr ./darwin-amd64
-	rm ./glide.zip
-else
-	curl -fL https://github.com/Masterminds/glide/releases/download/v$(GLIDE_VERSION)/glide-v$(GLIDE_VERSION)-linux-amd64.zip -o glide.zip
-	unzip glide.zip
-	mv ./linux-amd64/glide glide
-	rm -fr ./linux-amd64
-	rm ./glide.zip
-endif
 
 bin/$(NAME): deps $(SOURCES)
 	go build $(LDFLAGS) -o bin/$(NAME)
@@ -51,7 +36,7 @@ clean:
 
 .PHONY: deps
 deps: glide
-	./glide install
+	glide install
 
 .PHONY: docker-build
 docker-build: bin/$(NAME)$(LINUX_AMD64_SUFFIX)
@@ -60,6 +45,12 @@ docker-build: bin/$(NAME)$(LINUX_AMD64_SUFFIX)
 .PHONY: docker-push
 docker-push:
 	docker push $(DOCKER_IMAGE)
+
+.PHONY: glide
+glide:
+ifndef GLIDE
+	curl https://glide.sh/get | sh
+endif
 
 .PHONY: install
 install: deps
