@@ -1,7 +1,8 @@
 NAME := ec2c
-VERSION := 0.1.0
+VERSION := v0.1.0
 REVISION := $(shell git rev-parse --short HEAD)
 GOVERSION := $(subst go version ,,$(shell go version))
+GIT_TAG ?= $(TRAVIS_TAG)
 
 LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\" -X \"main.GoVersion=$(GOVERSION)\""
 
@@ -11,6 +12,8 @@ DOCKER_REPOSITORY := quay.io
 DOCKER_IMAGE_NAME := $(DOCKER_REPOSITORY)/dtan4/ec2c
 DOCKER_IMAGE_TAG ?= latest
 DOCKER_IMAGE := $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
+
+GHR_VERSION := v0.4.0
 
 .DEFAULT_GOAL := bin/$(NAME)
 
@@ -60,6 +63,19 @@ endif
 .PHONY: docker-push
 docker-push:
 	docker push $(DOCKER_IMAGE)
+
+ghr:
+ifeq ($(shell uname),Darwin)
+	curl -fL https://github.com/tcnksm/ghr/releases/download/$(GHR_VERSION)/ghr_$(GHR_VERSION)_darwin_amd64.zip -o ghr.zip
+else
+	curl -fL https://github.com/tcnksm/ghr/releases/download/$(GHR_VERSION)/ghr_$(GHR_VERSION)_linux_amd64.zip -o ghr.zip
+endif
+	unzip ghr.zip
+	rm ghr.zip
+
+.PHONY: github-release
+github-release: ghr dist
+	@./ghr -t $(GITHUB_TOKEN) -u dtan4 -r $(NAME) --replace --delete $(GIT_TAG) dist/
 
 .PHONY: glide
 glide:
