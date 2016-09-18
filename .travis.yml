@@ -9,6 +9,8 @@ env:
   - GO15VENDOREXPERIMENT=1
 script:
   - make test
+before_deploy:
+  - GOOS=linux GOARCH=amd64 make
 deploy:
   provider: script
   skip_cleanup: true
