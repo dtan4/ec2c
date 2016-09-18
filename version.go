@@ -1,7 +1,9 @@
 package main
 
-const Name string = "ec2c"
-const Version string = "0.1.0"
+var (
+	Name    string
+	Version string
+)
 
 // GitCommit describes latest commit hash.
 // This value is extracted by git command when building.
