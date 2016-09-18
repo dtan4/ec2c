@@ -11,6 +11,7 @@ script:
   - make test
 deploy:
   provider: script
+  skip_cleanup: true
   script: make ci-docker-release
   on:
     branch: master
