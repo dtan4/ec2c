@@ -74,7 +74,7 @@ endif
 	rm ghr.zip
 
 .PHONY: github-release
-github-release: ghr dist
+github-release: ghr cross-build dist
 	@./ghr -t $(GITHUB_TOKEN) -u dtan4 -r $(NAME) --replace --delete $(GIT_TAG) dist/
 
 .PHONY: glide
