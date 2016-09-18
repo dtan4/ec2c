@@ -11,10 +11,13 @@ script:
   - make test
 before_deploy:
   - GOOS=linux GOARCH=amd64 make
+  - make cross-build
+  - make dist
 deploy:
-  - provider: script
+  - provider: releases
     skip_cleanup: true
-    script: make github-release
+    api_key: $GITHUB_TOKEN
+    file_glob: 'dist/*.{tar.gz,zip}'
     on:
       tags: true
       go: '1.6'
