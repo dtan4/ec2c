@@ -33,6 +33,7 @@ deps: glide
 docker-build:
 	@ls
 ifeq ($(findstring ELF 64-bit LSB executable,$(shell file bin/$(NAME) 2> /dev/null)),)
+	@file bin/$(NAME)
 	@echo "bin/$(NAME) is not a binary of Linux 64bit binary."
 	@exit 1
 endif
