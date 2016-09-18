@@ -13,8 +13,6 @@ DOCKER_IMAGE_NAME := $(DOCKER_REPOSITORY)/dtan4/ec2c
 DOCKER_IMAGE_TAG ?= latest
 DOCKER_IMAGE := $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
 
-GHR_VERSION := v0.4.0
-
 .DEFAULT_GOAL := bin/$(NAME)
 
 bin/$(NAME): deps
@@ -63,19 +61,6 @@ endif
 .PHONY: docker-push
 docker-push:
 	docker push $(DOCKER_IMAGE)
-
-ghr:
-ifeq ($(shell uname),Darwin)
-	curl -fL https://github.com/tcnksm/ghr/releases/download/$(GHR_VERSION)/ghr_$(GHR_VERSION)_darwin_amd64.zip -o ghr.zip
-else
-	curl -fL https://github.com/tcnksm/ghr/releases/download/$(GHR_VERSION)/ghr_$(GHR_VERSION)_linux_amd64.zip -o ghr.zip
-endif
-	unzip ghr.zip
-	rm ghr.zip
-
-.PHONY: github-release
-github-release: ghr cross-build dist
-	@./ghr -t $(GITHUB_TOKEN) -u dtan4 -r $(NAME) --replace --delete $(GIT_TAG) dist/
 
 .PHONY: glide
 glide:
