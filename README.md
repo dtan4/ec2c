@@ -2,8 +2,6 @@
 
 Simple AWS EC2 CLI
 
-## Description
-
 ## Usage
 
 ### `ec2c cancel`
@@ -39,6 +37,12 @@ Delete tag from the specified EC2 instance
 Terminate the specified EC2 instance
 
 ## Install
+
+### Precompiled binary
+
+Precompiled binaries are available at [GitHub Releases](https://github.com/dtan4/ec2c/releases).
+
+### From source
 
 To install, use `go get`:
 
