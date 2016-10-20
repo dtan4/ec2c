@@ -1,5 +1,7 @@
 # ec2c
 
+[![Build Status](https://travis-ci.org/dtan4/ec2c.svg?branch=master)](https://travis-ci.org/dtan4/ec2c)
+
 Simple AWS EC2 CLI
 
 ## Usage
