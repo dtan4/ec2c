@@ -8,7 +8,12 @@ Simple AWS EC2 CLI
 
 ### Using Homebrew (OS X only)
 
-Preparing... :construction_worker:
+Formula is available at [dtan4/homebrew-dtan4](https://github.com/dtan4/homebrew-dtan4).
+
+```bash
+$ brew tap dtan4/dtan4
+$ brew install ec2c
+```
 
 ### Precompiled binary
 
