@@ -1,19 +1,9 @@
-## 0.1.0 (2015-10-14)
+# [v0.1.1](https://github.com/dtan4/ec2c/releases/tag/v0.1.1) (2016-10-21)
 
-Initial release
+## Features
 
-### Added
+- Print version string with revision
 
-- Add Fundamental features
+# [v0.1.0](https://github.com/dtan4/ec2c/releases/tag/v0.1.0) (2016-09-18)
 
-### Deprecated
-
-- Nothing
-
-### Removed
-
-- Nothing
-
-### Fixed
-
-- Nothing
+Initial release.
