@@ -1,11 +1,7 @@
 package main
 
 var (
-	Name    string
-	Version string
+	Name     = "ec2c"
+	Version  string
+	Revision string
 )
-
-// GitCommit describes latest commit hash.
-// This value is extracted by git command when building.
-// To set this from outside, use go build -ldflags "-X main.GitCommit \"$(COMMIT)\""
-var GitCommit string

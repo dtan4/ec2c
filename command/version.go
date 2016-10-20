@@ -16,10 +16,7 @@ type VersionCommand struct {
 func (c *VersionCommand) Run(args []string) int {
 	var versionString bytes.Buffer
 
-	fmt.Fprintf(&versionString, "%s version %s", c.Name, c.Version)
-	if c.Revision != "" {
-		fmt.Fprintf(&versionString, " (%s)", c.Revision)
-	}
+	fmt.Fprintf(&versionString, "%s version %s, build %s", c.Name, c.Version, c.Revision)
 
 	c.Ui.Output(versionString.String())
 	return 0

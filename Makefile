@@ -1,9 +1,8 @@
 NAME := ec2c
 VERSION := v0.1.0
 REVISION := $(shell git rev-parse --short HEAD)
-GOVERSION := $(subst go version ,,$(shell go version))
 
-LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\" -X \"main.GoVersion=$(GOVERSION)\""
+LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\""
 
 DIST_DIRS := find * -type d -exec
 
