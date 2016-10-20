@@ -4,6 +4,25 @@
 
 Simple AWS EC2 CLI
 
+## Installation
+
+### Using Homebrew (OS X only)
+
+Preparing... :construction_worker:
+
+### Precompiled binary
+
+Precompiled binaries are available at [GitHub Releases](https://github.com/dtan4/ec2c/releases).
+
+### From source
+
+```bash
+$ go get -d github.com/dtan4/ec2c
+$ cd $GOPATH/src/github.com/dtan4/ec2c
+$ make
+$ make instatll
+```
+
 ## Usage
 
 ### `ec2c cancel`
@@ -37,20 +56,6 @@ Delete tag from the specified EC2 instance
 ### `ec2c terminate`
 
 Terminate the specified EC2 instance
-
-## Install
-
-### Precompiled binary
-
-Precompiled binaries are available at [GitHub Releases](https://github.com/dtan4/ec2c/releases).
-
-### From source
-
-To install, use `go get`:
-
-```bash
-$ go get -d github.com/dtan4/ec2c
-```
 
 ## Contribution
 
