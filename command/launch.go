@@ -31,6 +31,8 @@ func (c *LaunchCommand) Run(args []string) int {
 		userData                 string
 		volumeSize               int64
 		volumeType               string
+		arn                      string
+		roleName                 string
 	)
 
 	var (
@@ -54,6 +56,8 @@ func (c *LaunchCommand) Run(args []string) int {
 	flags.StringVar(&userData, "userData", "", "User data")
 	flags.Int64Var(&volumeSize, "volumeSize", 8, "Volume size (default: 8)")
 	flags.StringVar(&volumeType, "volumeType", "gp2", "Volume type (default: gp2)")
+	flags.StringVar(&arn, "arn", "", "ARN")
+	flags.StringVar(&roleName, "roleName", "", "IAM Role Name")
 
 	if err := flags.Parse(args[0:]); err != nil {
 		return 1
@@ -92,6 +96,10 @@ func (c *LaunchCommand) Run(args []string) int {
 		MaxCount:            aws.Int64(instanceCount),
 		MinCount:            aws.Int64(1),
 		Monitoring:          monitoring,
+		IamInstanceProfile: &ec2.IamInstanceProfileSpecification{
+			Arn:  aws.String(arn),
+			Name: aws.String(roleName),
+		},
 	}
 
 	if subnetID != "" && associatePublicIPAddress {
