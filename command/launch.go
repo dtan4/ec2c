@@ -56,7 +56,7 @@ func (c *LaunchCommand) Run(args []string) int {
 	flags.StringVar(&userData, "userData", "", "User data")
 	flags.Int64Var(&volumeSize, "volumeSize", 8, "Volume size (default: 8)")
 	flags.StringVar(&volumeType, "volumeType", "gp2", "Volume type (default: gp2)")
-	flags.StringVar(&arn, "arn", "", "Amazon Resource Name")
+	flags.StringVar(&arn, "arn", "", "IAM Instance Profile ARN")
 	flags.StringVar(&roleName, "roleName", "", "IAM Role Name")
 
 	if err := flags.Parse(args[0:]); err != nil {
