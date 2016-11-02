@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"os"
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -67,11 +66,6 @@ func (c *LaunchCommand) Run(args []string) int {
 	for 0 < flags.NArg() {
 		arguments = append(arguments, flags.Arg(0))
 		flags.Parse(flags.Args()[1:])
-	}
-
-	if arn != "" && roleName != "" {
-		fmt.Fprintln(os.Stderr, "InvalidParameterCombination: The parameter 'roleName' and 'arn' can not be used in combination")
-		return 1
 	}
 
 	for _, id := range strings.Split(securityGroupIDs, ",") {
