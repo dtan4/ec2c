@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/dtan4/ec2c/msg"
 )
 
 type LaunchCommand struct {
@@ -108,7 +109,8 @@ func (c *LaunchCommand) Run(args []string) int {
 	if userData != "" {
 		buf, err := ioutil.ReadFile(userData)
 		if err != nil {
-			panic(err)
+			msg.Errorf("Failed to read user-data. error: %s\n", err)
+			return 1
 		}
 
 		opts.UserData = aws.String(base64.StdEncoding.EncodeToString(buf))
@@ -116,7 +118,8 @@ func (c *LaunchCommand) Run(args []string) int {
 
 	resp, err := svc.RunInstances(opts)
 	if err != nil {
-		panic(err)
+		msg.Errorf("Failed to launch instance. error: %s\n", err)
+		return 1
 	}
 
 	for _, instance := range resp.Instances {
