@@ -29,7 +29,7 @@ clean:
 	rm -rf vendor/*
 
 .PHONY: cross-build
-cross-build: deps
+cross-build:
 	for os in darwin linux windows; do \
 		for arch in amd64 386; do \
 			GOOS=$$os GOARCH=$$arch go build $(LDFLAGS) -o dist/$$os-$$arch/$(NAME); \
@@ -72,5 +72,5 @@ install:
 	go install $(LDFLAGS)
 
 .PHONY: test
-test: deps
+test:
 	go test -v
