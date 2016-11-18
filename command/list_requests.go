@@ -9,6 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/dtan4/ec2c/msg"
 )
 
 type ListRequestsCommand struct {
@@ -20,7 +21,8 @@ func (c *ListRequestsCommand) Run(args []string) int {
 
 	resp, err := svc.DescribeSpotInstanceRequests(nil)
 	if err != nil {
-		panic(err)
+		msg.Errorf("Failed to retrieve SpotRequest list. error: %s\n", err)
+		return 1
 	}
 
 	var instanceID, requestName string

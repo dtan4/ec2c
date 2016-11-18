@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/dtan4/ec2c/msg"
 )
 
 type UntagCommand struct {
@@ -62,7 +63,8 @@ func (c *UntagCommand) Run(args []string) int {
 
 	_, err := svc.DeleteTags(opts)
 	if err != nil {
-		panic(err)
+		msg.Errorf("Failed to delete tag. error: %s\n", err)
+		return 1
 	}
 
 	return 0

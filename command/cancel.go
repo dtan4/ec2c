@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/dtan4/ec2c/msg"
 )
 
 type CancelCommand struct {
@@ -53,7 +54,8 @@ func (c *CancelCommand) Run(args []string) int {
 
 	resp, err := svc.CancelSpotInstanceRequests(opts)
 	if err != nil {
-		panic(err)
+		msg.Errorf("Failed to cancel SpotRequest. error: %s\n", err)
+		return 1
 	}
 
 	fmt.Println(resp)

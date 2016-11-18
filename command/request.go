@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/dtan4/ec2c/msg"
 )
 
 type RequestCommand struct {
@@ -109,7 +110,8 @@ func (c *RequestCommand) Run(args []string) int {
 	if userData != "" {
 		buf, err := ioutil.ReadFile(userData)
 		if err != nil {
-			panic(err)
+			msg.Errorf("Failed to read user-data. error: %s\n", err)
+			return 1
 		}
 
 		launchSpecification.UserData = aws.String(base64.StdEncoding.EncodeToString(buf))
@@ -124,7 +126,8 @@ func (c *RequestCommand) Run(args []string) int {
 
 	resp, err := svc.RequestSpotInstances(opts)
 	if err != nil {
-		panic(err)
+		msg.Errorf("Failed to retrieve SpotRequest list. error: %s\n", err)
+		return 1
 	}
 
 	fmt.Println(resp)

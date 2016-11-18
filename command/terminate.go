@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/dtan4/ec2c/msg"
 )
 
 type TerminateCommand struct {
@@ -53,7 +54,8 @@ func (c *TerminateCommand) Run(args []string) int {
 
 	resp, err := svc.TerminateInstances(opts)
 	if err != nil {
-		panic(err)
+		msg.Errorf("Failed to terminate instance. error: %s\n", err)
+		return 1
 	}
 
 	for _, instance := range resp.TerminatingInstances {

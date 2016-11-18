@@ -2,6 +2,7 @@ NAME := ec2c
 VERSION := v0.1.1
 REVISION := $(shell git rev-parse --short HEAD)
 
+SRCS    := $(shell find . -name '*.go' -type f)
 LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\""
 
 DIST_DIRS := find * -type d -exec
@@ -13,7 +14,7 @@ DOCKER_IMAGE := $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
 
 .DEFAULT_GOAL := bin/$(NAME)
 
-bin/$(NAME): deps
+bin/$(NAME): $(SRCS)
 	go build $(LDFLAGS) -o bin/$(NAME)
 
 .PHONY: ci-docker-release
@@ -28,7 +29,7 @@ clean:
 	rm -rf vendor/*
 
 .PHONY: cross-build
-cross-build: deps
+cross-build:
 	for os in darwin linux windows; do \
 		for arch in amd64 386; do \
 			GOOS=$$os GOARCH=$$arch go build $(LDFLAGS) -o dist/$$os-$$arch/$(NAME); \
@@ -67,9 +68,9 @@ ifeq ($(shell command -v glide 2> /dev/null),)
 endif
 
 .PHONY: install
-install: deps
+install:
 	go install $(LDFLAGS)
 
 .PHONY: test
-test: deps
+test:
 	go test -v

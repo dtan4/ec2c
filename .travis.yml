@@ -5,8 +5,8 @@ language: go
 go:
   - '1.6'
   - '1.7'
-env:
-  - GO15VENDOREXPERIMENT=1
+install:
+  - make deps
 script:
   - make test
 before_deploy:

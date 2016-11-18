@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/dtan4/ec2c/msg"
 )
 
 type TagCommand struct {
@@ -72,7 +73,8 @@ func (c *TagCommand) Run(args []string) int {
 
 	_, err := svc.CreateTags(opts)
 	if err != nil {
-		panic(err)
+		msg.Errorf("Failed to create tag. error: %s\n", err)
+		return 1
 	}
 
 	return 0
