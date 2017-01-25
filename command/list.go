@@ -1,6 +1,7 @@
 package command
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -17,7 +18,27 @@ type ListCommand struct {
 }
 
 func (c *ListCommand) Run(args []string) int {
+	var (
+		tags bool
+	)
+
+	arguments := []string{}
+
 	svc := ec2.New(session.New(), &aws.Config{})
+
+	flags := flag.NewFlagSet("dtan4", flag.ContinueOnError)
+	flags.Usage = func() {}
+
+	flags.BoolVar(&tags, "tags", false, "Print instance tags")
+
+	if err := flags.Parse(args[0:]); err != nil {
+		return 1
+	}
+
+	for 0 < flags.NArg() {
+		arguments = append(arguments, flags.Arg(0))
+		flags.Parse(flags.Args()[1:])
+	}
 
 	resp, err := svc.DescribeInstances(nil)
 	if err != nil {
@@ -30,16 +51,29 @@ func (c *ListCommand) Run(args []string) int {
 	w := new(tabwriter.Writer)
 	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
 
-	fmt.Fprintln(w, strings.Join([]string{
-		"INSTANCE ID",
-		"STATUS",
-		"INSTANCE TYPE",
-		"AVAILABILITY ZONE",
-		"PRIVATE IP",
-		"PUBLIC IP",
-		"NAME",
-		"TAG",
-	}, "\t"))
+	if tags {
+		fmt.Fprintln(w, strings.Join([]string{
+			"INSTANCE ID",
+			"STATUS",
+			"INSTANCE TYPE",
+			"AVAILABILITY ZONE",
+			"PRIVATE IP",
+			"PUBLIC IP",
+			"NAME",
+			"TAG",
+		}, "\t"))
+	} else {
+		fmt.Fprintln(w, strings.Join([]string{
+			"INSTANCE ID",
+			"STATUS",
+			"INSTANCE TYPE",
+			"AVAILABILITY ZONE",
+			"PRIVATE IP",
+			"PUBLIC IP",
+			"NAME",
+		}, "\t"))
+	}
+
 	for idx, _ := range resp.Reservations {
 		for _, instance := range resp.Reservations[idx].Instances {
 			if instance.PrivateIpAddress != nil {
@@ -68,18 +102,32 @@ func (c *ListCommand) Run(args []string) int {
 				tagKeyValue = append(tagKeyValue, keyValue)
 			}
 
-			fmt.Fprintln(w, strings.Join(
-				[]string{
-					*instance.InstanceId,
-					*instance.State.Name,
-					*instance.InstanceType,
-					*instance.Placement.AvailabilityZone,
-					privateIPAddress,
-					publicIPAddress,
-					instanceName,
-					strings.Join(tagKeyValue, ","),
-				}, "\t",
-			))
+			if tags {
+				fmt.Fprintln(w, strings.Join(
+					[]string{
+						*instance.InstanceId,
+						*instance.State.Name,
+						*instance.InstanceType,
+						*instance.Placement.AvailabilityZone,
+						privateIPAddress,
+						publicIPAddress,
+						instanceName,
+						strings.Join(tagKeyValue, ","),
+					}, "\t",
+				))
+			} else {
+				fmt.Fprintln(w, strings.Join(
+					[]string{
+						*instance.InstanceId,
+						*instance.State.Name,
+						*instance.InstanceType,
+						*instance.Placement.AvailabilityZone,
+						privateIPAddress,
+						publicIPAddress,
+						instanceName,
+					}, "\t",
+				))
+			}
 		}
 	}
 
