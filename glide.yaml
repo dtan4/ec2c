@@ -4,7 +4,6 @@ import:
   subpackages:
   - aws
   - service/ec2
-- package: github.com/mitchellh/cli
 - package: github.com/spf13/cobra
 - package: github.com/pkg/errors
   version: ~0.8.0
