@@ -7,11 +7,6 @@ import (
 
 func Commands(meta *command.Meta) map[string]cli.CommandFactory {
 	return map[string]cli.CommandFactory{
-		"untag": func() (cli.Command, error) {
-			return &command.UntagCommand{
-				Meta: *meta,
-			}, nil
-		},
 
 		"version": func() (cli.Command, error) {
 			return &command.VersionCommand{
