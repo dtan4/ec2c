@@ -3,7 +3,7 @@ VERSION := v0.1.1
 REVISION := $(shell git rev-parse --short HEAD)
 
 SRCS    := $(shell find . -name '*.go' -type f)
-LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\""
+LDFLAGS := -ldflags="-s -w -X \"github.com/dtan4/ec2c/version.Version=$(VERSION)\" -X \"github.com/dtan4/ec2c/version.Revision=$(REVISION)\""
 
 DIST_DIRS := find * -type d -exec
 
@@ -73,4 +73,4 @@ install:
 
 .PHONY: test
 test:
-	go test -v
+	go test -v $(shell glide novendor)

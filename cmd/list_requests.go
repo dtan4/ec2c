@@ -1,4 +1,4 @@
-package command
+package cmd
 
 import (
 	"fmt"
@@ -9,20 +9,23 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
-	"github.com/dtan4/ec2c/msg"
+	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
 )
 
-type ListRequestsCommand struct {
-	Meta
+// listRequestsCmd represents the list_requests command
+var listRequestsCmd = &cobra.Command{
+	Use:   "list-requests",
+	Short: "List spot instance requests",
+	RunE:  doListRequests,
 }
 
-func (c *ListRequestsCommand) Run(args []string) int {
+func doListRequests(cmd *cobra.Command, args []string) error {
 	svc := ec2.New(session.New(), &aws.Config{})
 
 	resp, err := svc.DescribeSpotInstanceRequests(nil)
 	if err != nil {
-		msg.Errorf("Failed to retrieve SpotRequest list. error: %s\n", err)
-		return 1
+		return errors.Wrap(err, "failed to execute DescribeSpotInstanceRequests")
 	}
 
 	var instanceID, requestName string
@@ -62,16 +65,9 @@ func (c *ListRequestsCommand) Run(args []string) int {
 
 	w.Flush()
 
-	return 0
+	return nil
 }
 
-func (c *ListRequestsCommand) Synopsis() string {
-	return "List Spot Instance requests"
-}
-
-func (c *ListRequestsCommand) Help() string {
-	helpText := `
-
-`
-	return strings.TrimSpace(helpText)
+func init() {
+	RootCmd.AddCommand(listRequestsCmd)
 }

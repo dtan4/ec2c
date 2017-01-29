@@ -1,39 +1,44 @@
-hash: f92eae302a65b4f91bcdb7584acbd3a21eefeb3a67d5f83075448538eb8d75f9
-updated: 2016-04-04T18:56:14.853689891+09:00
+hash: a2be8ce4a4975d1c8ebc93f3d6bafac1108fac8cd1126f2922a148bf47f800c5
+updated: 2017-01-30T01:02:20.381030983+09:00
 imports:
-- name: github.com/armon/go-radix
-  version: 4239b77079c7b5d1243b7b4736304ce8ddb6f0f2
 - name: github.com/aws/aws-sdk-go
-  version: 9964f4c28168d9d39653df51db3b12f228c3b023
+  version: 3f8f870ec9939e32b3372abf74d24e468bcd285d
   subpackages:
   - aws
-  - service/ec2
   - aws/awserr
-  - aws/credentials
   - aws/awsutil
   - aws/client
   - aws/client/metadata
+  - aws/corehandlers
+  - aws/credentials
+  - aws/credentials/ec2rolecreds
+  - aws/credentials/endpointcreds
+  - aws/credentials/stscreds
+  - aws/defaults
+  - aws/ec2metadata
+  - aws/endpoints
   - aws/request
-  - private/endpoints
+  - aws/session
+  - aws/signer/v4
   - private/protocol
   - private/protocol/ec2query
-  - private/signer/v4
-  - private/waiter
+  - private/protocol/query
   - private/protocol/query/queryutil
-  - private/protocol/xml/xmlutil
   - private/protocol/rest
-- name: github.com/bgentry/speakeasy
-  version: 36e9cfdd690967f4f690c6edcc9ffacd006014a0
+  - private/protocol/xml/xmlutil
+  - private/waiter
+  - service/ec2
+  - service/sts
 - name: github.com/go-ini/ini
-  version: 12f418cc7edc5a618a51407b7ac1f1f512139df3
+  version: 6f66b0e091edb3c7b380f7c4f0f884274d550b67
+- name: github.com/inconshreveable/mousetrap
+  version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
 - name: github.com/jmespath/go-jmespath
-  version: 0b12d6b521d83fc7f755e7cfc1b1fbdd35a01a74
-- name: github.com/mattn/go-isatty
-  version: 56b76bdf51f7708750eac80fa38b952bb9f32639
-- name: github.com/mitchellh/cli
-  version: 168daae10d6ff81b8b1201b0a4c9607d7e9b82e3
-- name: golang.org/x/sys
-  version: a60af9cbbc6ab800af4f2be864a31f423a0ae1f2
-  subpackages:
-  - unix
-devImports: []
+  version: bd40a432e4c76585ef6b72d3fd96fb9b6dc7b68d
+- name: github.com/pkg/errors
+  version: 645ef00459ed84a119197bfb8d8205042c6df63d
+- name: github.com/spf13/cobra
+  version: de09d9ce07d0d8a74442cfeaa91628cf9492cc23
+- name: github.com/spf13/pflag
+  version: 25f8b5b07aece3207895bf19f7ab517eb3b22a40
+testImports: []
