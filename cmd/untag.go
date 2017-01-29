@@ -49,7 +49,7 @@ func doUntag(cmd *cobra.Command, args []string) error {
 func init() {
 	RootCmd.AddCommand(untagCmd)
 
-	tagCmd.Flags().BoolVar(&untagOpts.dryRun, "dry-run", false, "Dry run")
-	tagCmd.Flags().StringSliceVar(&untagOpts.instanceIDs, "instances", []string{}, "Instance IDs")
-	tagCmd.Flags().StringSliceVar(&untagOpts.tagStrings, "tags", []string{}, "KEY=value tags")
+	untagCmd.Flags().BoolVar(&untagOpts.dryRun, "dry-run", false, "Dry run")
+	untagCmd.Flags().StringSliceVar(&untagOpts.instanceIDs, "instances", []string{}, "Instance IDs")
+	untagCmd.Flags().StringSliceVar(&untagOpts.tagStrings, "tags", []string{}, "KEY=value tags")
 }
