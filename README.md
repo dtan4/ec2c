@@ -25,7 +25,7 @@ Precompiled binaries are available at [GitHub Releases](https://github.com/dtan4
 $ go get -d github.com/dtan4/ec2c
 $ cd $GOPATH/src/github.com/dtan4/ec2c
 $ make
-$ make instatll
+$ make install
 ```
 
 ## Usage
