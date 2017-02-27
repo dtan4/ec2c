@@ -30,6 +30,18 @@ $ make instatll
 
 ## Usage
 
+### Configuring credentials
+
+Before using ec2c, run `aws configure` to create `~/.aws/credentials`.
+
+`~/.aws/credentials` will look like:
+
+```
+[default]
+aws_access_key_id = xxxxxxxxxx
+aws_secret_access_key = xxxxxxxxxx
+```
+
 ### `ec2c cancel`
 
 Cancel the specified EC2 Spot Instance requests
