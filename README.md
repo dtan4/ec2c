@@ -42,6 +42,13 @@ aws_access_key_id = xxxxxxxxxx
 aws_secret_access_key = xxxxxxxxxx
 ```
 
+In addition, you must specify the region by the environmental variable `AWS_REGION`.
+You might want to append the line to `.bash_profile` like:
+
+```
+export AWS_REGION=ap-northeast-1
+```
+
 ### `ec2c cancel`
 
 Cancel the specified EC2 Spot Instance requests
