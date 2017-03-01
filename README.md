@@ -30,6 +30,34 @@ $ make install
 
 ## Usage
 
+### Configuring credentials
+
+Before using ec2c, ensure that you have credentials in `~/.aws/credentials`, which might look like:
+
+```
+[default]
+aws_access_key_id = AKID1234567890
+aws_secret_access_key = MY-SECRET-KEY
+```
+
+Alternatively, you can set the following environment variables:
+
+```
+export AWS_ACCESS_KEY_ID=AKID1234567890
+export AWS_SECRET_ACCESS_KEY=MY-SECRET-KEY
+```
+
+### Configuring the region
+
+In addition to credentials, you must specify the region by the environmental variable:
+
+```
+export AWS_REGION=ap-northeast-1
+```
+
+Alternatively, you can enable support for the shared config `~/.aws/config`.
+See [the aws-sdk-go documentation](https://github.com/aws/aws-sdk-go#configuring-credentials) for further information.
+
 ### `ec2c cancel`
 
 Cancel the specified EC2 Spot Instance requests
