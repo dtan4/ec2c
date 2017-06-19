@@ -21,7 +21,8 @@ var listCmd = &cobra.Command{
 }
 
 var listOpts = struct {
-	tags bool
+	launchTime bool
+	tags       bool
 }{}
 
 func doRun(cmd *cobra.Command, args []string) error {
@@ -37,28 +38,26 @@ func doRun(cmd *cobra.Command, args []string) error {
 	w := new(tabwriter.Writer)
 	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
 
-	if listOpts.tags {
-		fmt.Fprintln(w, strings.Join([]string{
-			"INSTANCE ID",
-			"STATUS",
-			"INSTANCE TYPE",
-			"AVAILABILITY ZONE",
-			"PRIVATE IP",
-			"PUBLIC IP",
-			"NAME",
-			"TAG",
-		}, "\t"))
-	} else {
-		fmt.Fprintln(w, strings.Join([]string{
-			"INSTANCE ID",
-			"STATUS",
-			"INSTANCE TYPE",
-			"AVAILABILITY ZONE",
-			"PRIVATE IP",
-			"PUBLIC IP",
-			"NAME",
-		}, "\t"))
+	headers := []string{
+		"INSTANCE ID",
+		"STATUS",
+		"INSTANCE TYPE",
+		"AVAILABILITY ZONE",
+		"PRIVATE IP",
+		"PUBLIC IP",
 	}
+
+	if listOpts.launchTime {
+		headers = append(headers, "LAUNCH TIME")
+	}
+
+	headers = append(headers, "NAME")
+
+	if listOpts.tags {
+		headers = append(headers, "TAGS")
+	}
+
+	fmt.Fprintln(w, strings.Join(headers, "\t"))
 
 	for _, reservation := range resp.Reservations {
 		for _, instance := range reservation.Instances {
@@ -88,32 +87,26 @@ func doRun(cmd *cobra.Command, args []string) error {
 				tagKeyValue = append(tagKeyValue, keyValue)
 			}
 
-			if listOpts.tags {
-				fmt.Fprintln(w, strings.Join(
-					[]string{
-						*instance.InstanceId,
-						*instance.State.Name,
-						*instance.InstanceType,
-						*instance.Placement.AvailabilityZone,
-						privateIPAddress,
-						publicIPAddress,
-						instanceName,
-						strings.Join(tagKeyValue, ","),
-					}, "\t",
-				))
-			} else {
-				fmt.Fprintln(w, strings.Join(
-					[]string{
-						*instance.InstanceId,
-						*instance.State.Name,
-						*instance.InstanceType,
-						*instance.Placement.AvailabilityZone,
-						privateIPAddress,
-						publicIPAddress,
-						instanceName,
-					}, "\t",
-				))
+			fields := []string{
+				*instance.InstanceId,
+				*instance.State.Name,
+				*instance.InstanceType,
+				*instance.Placement.AvailabilityZone,
+				privateIPAddress,
+				publicIPAddress,
 			}
+
+			if listOpts.launchTime {
+				fields = append(fields, (*instance.LaunchTime).Local().String())
+			}
+
+			fields = append(fields, instanceName)
+
+			if listOpts.tags {
+				fields = append(fields, strings.Join(tagKeyValue, ","))
+			}
+
+			fmt.Fprintln(w, strings.Join(fields, "\t"))
 		}
 	}
 
@@ -125,5 +118,6 @@ func doRun(cmd *cobra.Command, args []string) error {
 func init() {
 	RootCmd.AddCommand(listCmd)
 
+	listCmd.Flags().BoolVar(&listOpts.launchTime, "launch-time", false, "Print instance launch time")
 	listCmd.Flags().BoolVar(&listOpts.tags, "tags", false, "Print instance tags")
 }
