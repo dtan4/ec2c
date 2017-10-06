@@ -24,9 +24,9 @@ var rootOpts = struct {
 func Execute() {
 	if err := RootCmd.Execute(); err != nil {
 		if rootOpts.debug {
-			fmt.Printf("%+v\n", err)
+			fmt.Fprintf(os.Stderr, "%+v\n", err)
 		} else {
-			fmt.Println(err)
+			fmt.Fprintln(os.Stderr, err)
 		}
 
 		os.Exit(1)
