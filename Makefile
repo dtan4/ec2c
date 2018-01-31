@@ -1,5 +1,5 @@
 NAME := ec2c
-VERSION := v0.1.1
+VERSION := v0.2.0
 REVISION := $(shell git rev-parse --short HEAD)
 
 SRCS    := $(shell find . -name '*.go' -type f)
@@ -71,6 +71,11 @@ docker-push:
 .PHONY: install
 install:
 	go install $(LDFLAGS)
+
+.PHONY: release
+release:
+	git tag $(VERSION)
+	git push origin $(VERSION)
 
 .PHONY: test
 test:
