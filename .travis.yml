@@ -20,10 +20,8 @@ deploy:
     file: 'dist/*.{tar.gz,zip}'
     on:
       tags: true
-      go: '1.7'
   - provider: script
     skip_cleanup: true
     script: make ci-docker-release
     on:
       branch: master
-      go: '1.7'
