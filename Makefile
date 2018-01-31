@@ -72,6 +72,11 @@ docker-push:
 install:
 	go install $(LDFLAGS)
 
+.PHONY: release
+release:
+	git tag $(VERSION)
+	git push origin $(VERSION)
+
 .PHONY: test
 test:
 	go test -v $(NOVENDOR)
