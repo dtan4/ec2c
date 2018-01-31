@@ -4,6 +4,7 @@ REVISION := $(shell git rev-parse --short HEAD)
 
 SRCS    := $(shell find . -name '*.go' -type f)
 LDFLAGS := -ldflags="-s -w -X \"github.com/dtan4/ec2c/version.Version=$(VERSION)\" -X \"github.com/dtan4/ec2c/version.Revision=$(REVISION)\""
+NOVENDOR  := $(shell go list ./... | grep -v vendor)
 
 DIST_DIRS := find * -type d -exec
 
@@ -36,9 +37,15 @@ cross-build:
 		done; \
 	done
 
+.PHONY: dep
+dep:
+ifeq ($(shell command -v dep 2> /dev/null),)
+	go get -u github.com/golang/dep/cmd/dep
+endif
+
 .PHONY: deps
-deps: glide
-	glide install
+deps: dep
+	dep ensure -v
 
 .PHONY: dist
 dist:
@@ -61,16 +68,10 @@ endif
 docker-push:
 	docker push $(DOCKER_IMAGE)
 
-.PHONY: glide
-glide:
-ifeq ($(shell command -v glide 2> /dev/null),)
-	curl https://glide.sh/get | sh
-endif
-
 .PHONY: install
 install:
 	go install $(LDFLAGS)
 
 .PHONY: test
 test:
-	go test -v $(shell glide novendor)
+	go test -v $(NOVENDOR)
